@@ -3,9 +3,6 @@ import org.example.Courier;
 import org.junit.Before;
 import org.junit.Test;
 
-import static com.google.common.collect.Ranges.greaterThan;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -59,9 +56,9 @@ public class CourierLoginTest extends BaseTest {
     //    успешный запрос возвращает id
     @Test
     public void checkCourierLoginReturnId() {
-        int id =new Courier("KostKhar", "1234").loginCourier().then().extract()
+        int id = new Courier("KostKhar", "1234").loginCourier().then().extract()
                 .path("id");
-        assertTrue(id>0);
+        assertTrue(id > 0);
     }
 
 }
