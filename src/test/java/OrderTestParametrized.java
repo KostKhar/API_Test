@@ -15,37 +15,43 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 
 public class OrderTestParametrized extends BaseTest {
     //    Проверь, что когда создаёшь заказ:\
+    String firstName;
+    String lastName;
+    String address;
+    String metroStation;
+    String phone;
+    String comment;
     List color;
     int rentTime;
     String deliveryDate;
     Response response;
 
-    public OrderTestParametrized(int rentTime, String deliveryDate, List color) {
-        String firstName = "Kostya";
-        String lastName = "Kharik";
-        String address = "Konoha, 142 apt.";
-        String metroStation = "4";
-        String phone = "8951556554";
+    public OrderTestParametrized(String firstName, String lastName, String address, String metroStation, String phone, int rentTime, String deliveryDate, String comment, List color) {
+        this.firstName = firstName;
+        this.lastName= lastName;
+        this.address = address;
+        this.metroStation = metroStation;
+        this.phone = phone;
         this.rentTime = rentTime;
         this.deliveryDate = deliveryDate;
-        String comment = "Оставьте у подъеда №5";
+        this.comment = comment;
         this.color = color;
     }
 
 
-    @Parameterized.Parameters(name = "Test data: rentTime {0}, deliveryDate {1}, color {2}")
+    @Parameterized.Parameters(name = "Test data: firstname {0}, lastname {1}, address {3}, metroStation {4}, phone {5}, rentTime {6}, deliveryDate {7}, comment {8}, color {9}")
     public static Object[] getData() {
-        Object[][] objects = {
-                {1, "2024-02-15", List.of("BLACK")},
-                {3, "2024-02-15", List.of("BLACK", "GREY")},
-                {5, "2024-02-15", List.of()},
+        return new Object[][] {
+                {"Kostya", "Kharik",  "Konoha, 142 apt.", "4", "8951556554", 1, "2024-02-15", "Оставьте у подъеда №5", List.of("BLACK")},
+                {"Ivan", "Ivanov",  "Lenina, 50", "8", "89165542636", 3, "2024-02-19", "Оставьте у квартиры", List.of("BLACK", "GREY")},
+                {"Sidr", "Sidorov",  "School district, 39", "10", "89678772524", 5, "2024-02-25", "", List.of()},
         };
-        return objects;
+
     }
 
     @Test
     public void checkColorTest() {
-        OrderTestParametrized order = new OrderTestParametrized(rentTime, deliveryDate, color);
+        OrderTestParametrized order = new OrderTestParametrized(firstName, lastName, address, metroStation, phone, rentTime, deliveryDate, comment,color);
         Response response = given()
                 .header("Content-type", "application/json")
                 .body(order)

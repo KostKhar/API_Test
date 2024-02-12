@@ -12,7 +12,7 @@ public class CourierCreatedTest extends BaseTest {
     @Test
     public void checkCourierCreate() {
         this.courier = new Courier("KostKhar", "1234", "kostya");
-        courier.createCourier().then().assertThat();
+        courier.createCourier().then().assertThat().statusCode(201);
     }
 
     //нельзя создать двух одинаковых курьеров

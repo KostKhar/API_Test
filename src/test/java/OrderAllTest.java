@@ -1,16 +1,21 @@
 import org.junit.After;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.withNoArgs;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.junit.Assert.assertTrue;
 
 public class OrderAllTest extends BaseTest {
 
     @Test
     public void checkOrderAll() {
-        given()
+       ArrayList<String> orders = given()
                 .get("/api/v1/orders")
-                .then().assertThat().extract().path("orders", String.valueOf(notNullValue()));
+                .then().extract().path("orders");
+       assertTrue( orders.size() >0);
     }
 
     @Override

@@ -3,8 +3,11 @@ import org.example.Courier;
 import org.junit.Before;
 import org.junit.Test;
 
+import static com.google.common.collect.Ranges.greaterThan;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class CourierLoginTest extends BaseTest {
 
@@ -22,7 +25,7 @@ public class CourierLoginTest extends BaseTest {
     @Test
     public void checkCourierLoginWithCorrectLoginAndPassword() {
         this.courier = new Courier("KostKhar", "1234");
-        courier.loginCourier().then().assertThat();
+        courier.loginCourier().then().assertThat().statusCode(200);
     }
 
 //    для авторизации нужно передать все обязательные поля;
@@ -56,9 +59,9 @@ public class CourierLoginTest extends BaseTest {
     //    успешный запрос возвращает id
     @Test
     public void checkCourierLoginReturnId() {
-        new Courier("KostKhar", "1234").loginCourier().then().
-                assertThat().extract().
-                path("id", String.valueOf(notNullValue()));
+        int id =new Courier("KostKhar", "1234").loginCourier().then().extract()
+                .path("id");
+        assertTrue(id>0);
     }
 
 }
